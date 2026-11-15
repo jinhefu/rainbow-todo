@@ -1,0 +1,75 @@
+<view class="page-shell">
+  <view class="hero">
+    <view class="hero-row">
+      <view class="hero-copy">
+        <view class="hero-kicker">{{dateLabel}}</view>
+        <view class="hero-title rainbow-text">彩虹待办</view>
+        <view class="hero-greet">{{greeting}}，{{nickname}}</view>
+      </view>
+      <view class="hero-mascot">🌈</view>
+    </view>
+
+    <view class="progress-card card">
+      <view class="progress-top">
+        <view>
+          <view class="progress-label">今日进度</view>
+          <view class="progress-num">{{stats.doneToday}}<text class="progress-unit">/ {{stats.goal}} 件</text></view>
+        </view>
+        <view class="progress-pill">{{stats.todayPercent}}%</view>
+      </view>
+      <view class="progress-track">
+        <view class="progress-fill" style="width: {{stats.todayPercent}}%;"></view>
+      </view>
+      <view class="progress-foot">
+        <text>{{stats.pending}} 件待办</text>
+        <text wx:if="{{stats.overdue > 0}}" class="progress-warn">逾期 {{stats.overdue}} 件</text>
+        <text wx:else>本周完成 {{stats.weekDone}} 件</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="filters">
+    <view class="chip {{filter === 'all' ? 'chip-on' : ''}}" data-value="all" bindtap="onFilter">全部 {{counts.all}}</view>
+    <view class="chip {{filter === 'pending' ? 'chip-on' : ''}}" data-value="pending" bindtap="onFilter">待办 {{counts.pending}}</view>
+    <view class="chip {{filter === 'done' ? 'chip-on' : ''}}" data-value="done" bindtap="onFilter">已完成 {{counts.done}}</view>
+  </view>
+
+  <scroll-view class="list-area" scroll-y>
+    <view wx:if="{{visibleTasks.length === 0}}" class="empty fade-up">
+      <view class="empty-emoji">🌈</view>
+      <view class="empty-title">{{emptyTitle}}</view>
+      <view class="empty-sub">{{emptySub}}</view>
+    </view>
+
+    <view wx:for="{{visibleTasks}}"
+          wx:key="id"
+          class="task-item fade-up {{item.done ? 'task-done' : ''}}"
+          style="animation-delay: {{index * 40}}ms;"
+          data-id="{{item.id}}"
+          bindtap="onOpen"
+          bindlongpress="onLongPress">
+      <view class="task-accent" style="background: {{item.color}};"></view>
+      <view class="task-check {{item.done ? 'task-check-on' : ''}}"
+            style="{{item.done ? 'background:' + item.color + ';border-color:' + item.color : 'border-color:' + item.color}}"
+            data-id="{{item.id}}"
+            catchtap="onToggle">
+        <text wx:if="{{item.done}}" class="task-check-mark">✓</text>
+      </view>
+      <view class="task-body">
+        <view class="task-title">{{item.title}}</view>
+        <view class="task-meta">
+          <text class="task-tag" style="background: {{item.softColor}}; color: {{item.color}};">{{item.colorName}}</text>
+          <text wx:if="{{item.dueLabel}}" class="task-due {{item.overdue ? 'task-due-warn' : ''}}">{{item.overdue ? '⚠ ' : ''}}{{item.dueLabel}}</text>
+          <text wx:if="{{item.priority > 0}}" class="task-priority {{item.priorityClass}}">{{item.priorityLabel}}</text>
+        </view>
+        <view wx:if="{{item.note}}" class="task-note">{{item.note}}</view>
+      </view>
+    </view>
+
+    <view class="list-pad"></view>
+  </scroll-view>
+
+  <view class="fab" bindtap="onAdd" hover-class="fab-hover">
+    <text class="fab-plus">＋</text>
+  </view>
+</view>

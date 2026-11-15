@@ -1,0 +1,162 @@
+.mine-page {
+  padding: 16rpx 0 40rpx;
+}
+
+.profile {
+  margin: 16rpx 32rpx 24rpx;
+  padding: 34rpx 32rpx;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(130deg, #fff8fb 0%, #f3f6ff 100%);
+}
+
+.avatar {
+  width: 104rpx;
+  height: 104rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffe3ec 0%, #e7e4ff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 52rpx;
+  margin-right: 24rpx;
+  box-shadow: 0 10rpx 24rpx rgba(151, 117, 250, 0.18);
+}
+
+.profile-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-name {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--rb-ink);
+}
+
+.profile-sub {
+  margin-top: 6rpx;
+  font-size: 24rpx;
+  color: var(--rb-ink-faint);
+}
+
+.profile-badge {
+  padding: 10rpx 22rpx;
+  border-radius: 999rpx;
+  background: rgba(151, 117, 250, 0.12);
+  color: #7c5cf0;
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.panel {
+  margin: 0 32rpx 24rpx;
+  padding: 8rpx 32rpx;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 26rpx 0;
+  border-bottom: 1rpx solid var(--rb-line);
+}
+
+.row-last {
+  border-bottom: none;
+}
+
+.row-label {
+  font-size: 28rpx;
+  color: var(--rb-ink);
+}
+
+.row-input {
+  flex: 1;
+  text-align: right;
+  font-size: 28rpx;
+  color: var(--rb-ink-soft);
+  margin-left: 30rpx;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+}
+
+.step-btn {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: #f3f4fa;
+  color: var(--rb-ink);
+  font-size: 34rpx;
+  line-height: 56rpx;
+  text-align: center;
+}
+
+.step-disabled {
+  opacity: 0.35;
+}
+
+.step-value {
+  width: 72rpx;
+  text-align: center;
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--rb-ink);
+}
+
+.action-row {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid var(--rb-line);
+}
+
+.action-last {
+  border-bottom: none;
+}
+
+.action-icon {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 22rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34rpx;
+  margin-right: 22rpx;
+}
+
+.action-copy {
+  flex: 1;
+}
+
+.action-title {
+  font-size: 28rpx;
+  color: var(--rb-ink);
+}
+
+.action-sub {
+  margin-top: 4rpx;
+  font-size: 22rpx;
+  color: var(--rb-ink-faint);
+}
+
+.action-arrow {
+  color: #c9cddb;
+  font-size: 36rpx;
+  margin-left: 12rpx;
+}
+
+.about {
+  margin-top: 40rpx;
+  text-align: center;
+  font-size: 22rpx;
+  color: #b3b8c9;
+}
+
+.bottom-pad {
+  height: 40rpx;
+}

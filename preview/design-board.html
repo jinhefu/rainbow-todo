@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<title>彩虹待办 · 界面预览</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #eef1f8;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+    color: #24293a;
+    padding: 34px 40px 44px;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .board-head { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 26px; padding: 0 6px; }
+  .board-title { font-size: 26px; font-weight: 800; letter-spacing: 1px; }
+  .board-title span {
+    background: linear-gradient(96deg, #ff6b6b, #ffa94d 22%, #ffd43b 42%, #51cf66 62%, #4dabf7 82%, #9775fa);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .board-sub { font-size: 13px; color: #8a90a6; margin-top: 8px; letter-spacing: 1px; }
+  .board-note { font-size: 12px; color: #9aa0b4; }
+  .row { display: flex; gap: 34px; align-items: flex-start; }
+  .frame { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .phone {
+    width: 390px; height: 844px; border-radius: 46px; background: #f6f7fb;
+    overflow: hidden; position: relative; display: flex; flex-direction: column;
+    box-shadow: 0 34px 80px rgba(38, 45, 82, 0.18), 0 0 0 1px rgba(38, 45, 82, 0.04);
+  }
+  .statusbar { height: 44px; padding: 0 26px; display: flex; align-items: center; justify-content: space-between; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .statusbar .dots { letter-spacing: 2px; }
+  .navbar { height: 44px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 600; flex-shrink: 0; }
+  .navbar.back { justify-content: space-between; padding: 0 18px; }
+  .navbar.back .chev { font-size: 24px; font-weight: 400; color: #24293a; }
+  .content { flex: 1; overflow: hidden; position: relative; }
+  .tabbar { height: 56px; background: #fff; display: flex; border-top: 1px solid #f0f2f8; flex-shrink: 0; }
+  .tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 10px; color: #9aa0b4; }
+  .tab img { width: 24px; height: 24px; display: block; }
+  .tab.on { color: #24293a; font-weight: 600; }
+  .caption { font-size: 13px; color: #6b7288; font-weight: 600; letter-spacing: 1px; }
+
+  .rb-text { background: linear-gradient(96deg, #ff6b6b 0%, #ffa94d 20%, #ffd43b 38%, #51cf66 56%, #4dabf7 78%, #9775fa 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .card { background: #fff; border-radius: 16px; box-shadow: 0 6px 18px rgba(38, 45, 82, 0.07); }
+
+  /* ---------- home ---------- */
+  .home { padding-bottom: 0; }
+  .hero { padding: 8px 16px 0; }
+  .hero-row { display: flex; align-items: flex-start; justify-content: space-between; padding-top: 4px; }
+  .hero-kicker { font-size: 12px; color: #9aa0b4; letter-spacing: 1px; }
+  .hero-title { font-size: 34px; font-weight: 800; letter-spacing: 1px; line-height: 1.15; margin: 3px 0 2px; }
+  .hero-greet { font-size: 13px; color: #6b7288; }
+  .hero-mascot { font-size: 32px; line-height: 1; transform: rotate(-4deg); }
+  .progress-card { margin-top: 14px; padding: 15px 16px; }
+  .progress-top { display: flex; align-items: center; justify-content: space-between; }
+  .progress-label { font-size: 12px; color: #9aa0b4; letter-spacing: 1px; }
+  .progress-num { font-size: 26px; font-weight: 800; line-height: 1.2; }
+  .progress-unit { font-size: 12px; font-weight: 500; color: #9aa0b4; margin-left: 4px; }
+  .progress-pill { padding: 6px 14px; border-radius: 999px; background: linear-gradient(120deg, #ff6b6b, #ffa94d 40%, #9775fa 100%); color: #fff; font-size: 13px; font-weight: 700; box-shadow: 0 5px 12px rgba(255, 107, 107, 0.28); }
+  .progress-track { margin-top: 13px; height: 8px; border-radius: 999px; background: #f0f2f8; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 999px; width: 33%; background: linear-gradient(90deg, #ff6b6b 0%, #ffa94d 26%, #ffd43b 44%, #51cf66 62%, #4dabf7 80%, #9775fa 100%); }
+  .progress-foot { margin-top: 9px; display: flex; justify-content: space-between; font-size: 11px; color: #9aa0b4; }
+  .filters { padding: 14px 16px 5px; display: flex; }
+  .chip { margin-right: 8px; padding: 6px 13px; border-radius: 999px; background: #fff; color: #6b7288; font-size: 13px; box-shadow: 0 2px 7px rgba(38, 45, 82, 0.05); }
+  .chip.on { background: #24293a; color: #fff; font-weight: 600; box-shadow: 0 4px 10px rgba(36, 41, 58, 0.22); }
+  .list { padding: 4px 16px 0; }
+  .task { position: relative; display: flex; align-items: flex-start; background: #fff; border-radius: 14px; padding: 14px 13px 14px 16px; margin-bottom: 10px; box-shadow: 0 4px 13px rgba(38, 45, 82, 0.06); overflow: hidden; }
+  .accent { position: absolute; left: 0; top: 0; bottom: 0; width: 4px; }
+  .check { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; border: 2px solid; margin: 3px 11px 0 5px; display: flex; align-items: center; justify-content: center; }
+  .check.on { color: #fff; font-size: 13px; font-weight: 700; }
+  .task-title { font-size: 15px; font-weight: 600; }
+  .task-meta { display: flex; flex-wrap: wrap; align-items: center; margin-top: 5px; }
+  .tag { font-size: 10px; padding: 2px 6px; border-radius: 4px; margin-right: 6px; }
+  .due { font-size: 11px; color: #9aa0b4; margin-right: 6px; }
+  .due.warn { color: #ff6b6b; }
+  .prio { font-size: 10px; padding: 2px 6px; border-radius: 4px; margin-right: 6px; }
+  .prio.p1 { background: #fff3e0; color: #f08c00; }
+  .prio.p2 { background: #ffe8e8; color: #e03131; }
+  .note { margin-top: 4px; font-size: 12px; color: #6b7288; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .task.done { opacity: 0.72; }
+  .task.done .task-title { color: #9aa0b4; text-decoration: line-through; }
+  .fab { position: absolute; right: 22px; bottom: 22px; width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #ff6b6b 0%, #ffa94d 36%, #9775fa 100%); box-shadow: 0 8px 18px rgba(151, 117, 250, 0.38); color: #fff; font-size: 30px; font-weight: 300; display: flex; align-items: center; justify-content: center; padding-bottom: 4px; }
+
+  /* ---------- editor ---------- */
+  .editor { padding: 12px 16px; background: linear-gradient(180deg, #fdf7fb 0%, #f6f7fb 32%); }
+  .editor-head { padding: 6px 4px 14px; }
+  .eyebrow { font-size: 12px; color: #9aa0b4; letter-spacing: 2px; }
+  .editor-title { font-size: 22px; font-weight: 800; margin-top: 4px; }
+  .field { padding: 15px 16px; }
+  .title-input { font-size: 18px; font-weight: 700; color: #24293a; }
+  .field-line { height: 1px; background: #eef0f7; margin: 11px 0; }
+  .note-input { font-size: 14px; color: #8a90a6; }
+  .block { margin-top: 20px; padding: 0 4px; }
+  .section-label { font-size: 12px; font-weight: 600; color: #9aa0b4; letter-spacing: 1px; }
+  .swatches { display: flex; flex-wrap: wrap; margin-top: 10px; }
+  .swatch { width: 36px; height: 36px; border-radius: 50%; margin: 0 6px 8px 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(38, 45, 82, 0.12); border: 2.5px solid transparent; color: #fff; font-size: 14px; font-weight: 700; }
+  .swatch.on { border-color: #fff; transform: scale(1.08); box-shadow: 0 5px 12px rgba(38, 45, 82, 0.22); }
+  .swatch-name { font-size: 12px; color: #9aa0b4; margin-top: 2px; }
+  .segment-row { display: flex; background: #eef0f7; border-radius: 11px; padding: 4px; margin-top: 10px; }
+  .segment { flex: 1; text-align: center; padding: 9px 0; border-radius: 8px; font-size: 13px; color: #6b7288; }
+  .segment.on { background: #fff; color: #24293a; font-weight: 700; box-shadow: 0 3px 8px rgba(38, 45, 82, 0.1); }
+  .quick-row { display: flex; flex-wrap: wrap; margin-top: 10px; }
+  .quick { margin: 0 8px 8px 0; padding: 7px 14px; border-radius: 999px; background: #fff; font-size: 13px; color: #6b7288; box-shadow: 0 2px 7px rgba(38, 45, 82, 0.05); }
+  .quick.on { background: #24293a; color: #fff; font-weight: 600; }
+  .due-preview { margin-top: 3px; font-size: 12px; color: #9aa0b4; display: flex; justify-content: space-between; align-items: center; }
+  .due-clear { color: #ff6b6b; }
+  .editor-actions { margin-top: 30px; }
+  .btn-save { height: 50px; border-radius: 999px; background: linear-gradient(135deg, #ff6b6b 0%, #ffa94d 40%, #9775fa 100%); color: #fff; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 17px rgba(151, 117, 250, 0.32); }
+  .btn-delete { margin-top: 12px; text-align: center; font-size: 13px; color: #ff6b6b; padding: 10px 0; }
+
+  /* ---------- stats ---------- */
+  .stats { padding: 8px 0 20px; }
+  .stats-head { padding: 6px 20px 12px; }
+  .stats-title { font-size: 28px; font-weight: 800; letter-spacing: 1px; }
+  .stats-sub { margin-top: 3px; font-size: 12px; color: #9aa0b4; }
+  .metric-grid { display: flex; flex-wrap: wrap; justify-content: space-between; padding: 0 16px; }
+  .metric { width: 48.4%; padding: 14px 14px 12px; margin-bottom: 10px; }
+  .metric-num { font-size: 26px; font-weight: 800; line-height: 1.1; }
+  .metric-unit { font-size: 12px; font-weight: 500; color: #9aa0b4; margin-left: 3px; }
+  .metric-label { margin-top: 4px; font-size: 12px; color: #9aa0b4; }
+  .panel { margin: 4px 16px 12px; padding: 15px 16px; }
+  .panel-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 13px; }
+  .panel-title { font-size: 15px; font-weight: 700; }
+  .panel-hint { font-size: 11px; color: #9aa0b4; }
+  .chart { display: flex; align-items: flex-end; justify-content: space-between; }
+  .chart-col { width: 32px; display: flex; flex-direction: column; align-items: center; }
+  .chart-count { height: 17px; font-size: 10px; color: #9aa0b4; line-height: 17px; }
+  .chart-track { width: 14px; height: 90px; border-radius: 999px; background: #f0f2f8; display: flex; align-items: flex-end; overflow: hidden; }
+  .chart-fill { width: 100%; border-radius: 999px; background: linear-gradient(180deg, #ffd43b, #ff6b6b); }
+  .chart-fill.today { background: linear-gradient(180deg, #9775fa, #4dabf7); box-shadow: 0 3px 9px rgba(151, 117, 250, 0.35); }
+  .chart-label { margin-top: 7px; font-size: 11px; color: #9aa0b4; }
+  .chart-label.today { color: #9775fa; font-weight: 700; }
+  .color-row { display: flex; align-items: center; margin-bottom: 10px; }
+  .color-row:last-child { margin-bottom: 0; }
+  .color-dot { width: 9px; height: 9px; border-radius: 50%; margin-right: 8px; }
+  .color-name { width: 60px; font-size: 12px; color: #6b7288; }
+  .color-bar { flex: 1; height: 7px; border-radius: 999px; background: #f0f2f8; overflow: hidden; margin-right: 8px; }
+  .color-bar-fill { height: 100%; border-radius: 999px; }
+  .color-count { width: 24px; text-align: right; font-size: 11px; color: #9aa0b4; }
+  .quote { margin: 4px 16px 0; padding: 15px 16px; display: flex; align-items: center; background: linear-gradient(120deg, #fff7fb, #f4f6ff); }
+  .quote-emoji { font-size: 22px; margin-right: 10px; }
+  .quote-text { flex: 1; font-size: 13px; color: #6b7288; line-height: 1.6; }
+</style>
+</head>
+<body>
+  <div class="board-head">
+    <div>
+      <div class="board-title"><span>彩虹待办</span> · 界面预览</div>
+      <div class="board-sub">我们唯一号小程序 · 3 个核心界面 · 375pt 逻辑宽度</div>
+    </div>
+    <div class="board-note">设计稿由真实 WXML / WXSS 还原</div>
+  </div>
+
+  <div class="row">
+    <!-- HOME -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span class="dots">●●● ▮</span></div>
+        <div class="navbar">彩虹待办</div>
+        <div class="content">
+          <div class="hero">
+            <div class="hero-row">
+              <div>
+                <div class="hero-kicker">11月15日 周六</div>
+                <div class="hero-title rb-text">彩虹待办</div>
+                <div class="hero-greet">晚上好，彩虹追梦人</div>
+              </div>
+              <div class="hero-mascot">🌈</div>
+            </div>
+            <div class="card progress-card">
+              <div class="progress-top">
+                <div>
+                  <div class="progress-label">今日进度</div>
+                  <div class="progress-num">1<span class="progress-unit">/ 3 件</span></div>
+                </div>
+                <div class="progress-pill">33%</div>
+              </div>
+              <div class="progress-track"><div class="progress-fill"></div></div>
+              <div class="progress-foot"><span>3 件待办</span><span>本周完成 4 件</span></div>
+            </div>
+          </div>
+
+          <div class="filters">
+            <div class="chip on">全部 4</div>
+            <div class="chip">待办 3</div>
+            <div class="chip">已完成 1</div>
+          </div>
+
+          <div class="list">
+            <div class="task">
+              <div class="accent" style="background: #FF6B6B;"></div>
+              <div class="check" style="border-color: #FF6B6B;"></div>
+              <div class="task-body" style="flex: 1; min-width: 0;">
+                <div class="task-title">完成产品原型评审</div>
+                <div class="task-meta">
+                  <span class="tag" style="background: rgba(255,107,107,0.14); color: #FF6B6B;">草莓红</span>
+                  <span class="due">今天</span>
+                  <span class="prio p2">紧急</span>
+                </div>
+                <div class="note">对齐交互细节与验收标准</div>
+              </div>
+            </div>
+
+            <div class="task">
+              <div class="accent" style="background: #4DABF7;"></div>
+              <div class="check" style="border-color: #4DABF7;"></div>
+              <div class="task-body" style="flex: 1; min-width: 0;">
+                <div class="task-title">给妈妈打个电话</div>
+                <div class="task-meta">
+                  <span class="tag" style="background: rgba(77,171,247,0.14); color: #4DABF7;">晴空蓝</span>
+                  <span class="due">明天</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="task done">
+              <div class="accent" style="background: #51CF66;"></div>
+              <div class="check on" style="background: #51CF66; border-color: #51CF66;">✓</div>
+              <div class="task-body" style="flex: 1; min-width: 0;">
+                <div class="task-title">晨跑 3 公里</div>
+                <div class="task-meta">
+                  <span class="tag" style="background: rgba(81,207,102,0.14); color: #51CF66;">青草绿</span>
+                  <span class="due">已完成</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="task">
+              <div class="accent" style="background: #9775FA;"></div>
+              <div class="check" style="border-color: #9775FA;"></div>
+              <div class="task-body" style="flex: 1; min-width: 0;">
+                <div class="task-title">提交季度报销单</div>
+                <div class="task-meta">
+                  <span class="tag" style="background: rgba(151,117,250,0.14); color: #9775FA;">葡萄紫</span>
+                  <span class="due warn">⚠ 逾期 2 天</span>
+                  <span class="prio p1">重要</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fab">＋</div>
+        </div>
+        <div class="tabbar">
+          <div class="tab on"><img src="../images/tab-home-on.png" alt="" /><span>待办</span></div>
+          <div class="tab"><img src="../images/tab-stats.png" alt="" /><span>统计</span></div>
+          <div class="tab"><img src="../images/tab-mine.png" alt="" /><span>我的</span></div>
+        </div>
+      </div>
+      <div class="caption">01 · 首页</div>
+    </div>
+
+    <!-- EDITOR -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span class="dots">●●● ▮</span></div>
+        <div class="navbar back"><span class="chev">‹</span><span>编辑待办</span><span style="width: 12px;"></span></div>
+        <div class="content">
+          <div class="editor">
+            <div class="editor-head">
+              <div class="eyebrow">编辑待办</div>
+              <div class="editor-title rb-text">让细节更清晰</div>
+            </div>
+
+            <div class="field card">
+              <div class="title-input">完成产品原型评审</div>
+              <div class="field-line"></div>
+              <div class="note-input">对齐交互细节与验收标准</div>
+            </div>
+
+            <div class="block">
+              <div class="section-label">选一个彩虹色</div>
+              <div class="swatches">
+                <div class="swatch on" style="background: #FF6B6B;">✓</div>
+                <div class="swatch" style="background: #FFA94D;"></div>
+                <div class="swatch" style="background: #FFD43B;"></div>
+                <div class="swatch" style="background: #51CF66;"></div>
+                <div class="swatch" style="background: #20C997;"></div>
+                <div class="swatch" style="background: #4DABF7;"></div>
+                <div class="swatch" style="background: #9775FA;"></div>
+                <div class="swatch" style="background: #F783AC;"></div>
+              </div>
+              <div class="swatch-name">草莓红</div>
+            </div>
+
+            <div class="block">
+              <div class="section-label">优先级</div>
+              <div class="segment-row">
+                <div class="segment">普通</div>
+                <div class="segment">重要</div>
+                <div class="segment on">紧急</div>
+              </div>
+            </div>
+
+            <div class="block">
+              <div class="section-label">截止日期</div>
+              <div class="quick-row">
+                <div class="quick on">今天</div>
+                <div class="quick">明天</div>
+                <div class="quick">后天</div>
+                <div class="quick">选择日期</div>
+              </div>
+              <div class="due-preview"><span>已设为 2026-11-15（今天）</span><span class="due-clear">清除日期</span></div>
+            </div>
+
+            <div class="editor-actions">
+              <div class="btn-save">保存修改</div>
+              <div class="btn-delete">删除这条待办</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="caption">02 · 新建 / 编辑</div>
+    </div>
+
+    <!-- STATS -->
+    <div class="frame">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span class="dots">●●● ▮</span></div>
+        <div class="navbar">彩虹统计</div>
+        <div class="content">
+          <div class="stats">
+            <div class="stats-head">
+              <div class="stats-title rb-text">彩虹统计</div>
+              <div class="stats-sub">11月15日 周六 · 看见自己的每一点进步</div>
+            </div>
+
+            <div class="metric-grid">
+              <div class="metric card"><div class="metric-num">12</div><div class="metric-label">全部待办</div></div>
+              <div class="metric card"><div class="metric-num">8</div><div class="metric-label">已完成</div></div>
+              <div class="metric card"><div class="metric-num">5</div><div class="metric-label">本周完成</div></div>
+              <div class="metric card"><div class="metric-num">4<span class="metric-unit">天</span></div><div class="metric-label">连续打卡</div></div>
+            </div>
+
+            <div class="panel card">
+              <div class="panel-head"><span class="panel-title">近 7 天完成情况</span><span class="panel-hint">今天已完成 1 件</span></div>
+              <div class="chart">
+                <div class="chart-col"><div class="chart-count"></div><div class="chart-track"><div class="chart-fill" style="height: 22%;"></div></div><div class="chart-label">一</div></div>
+                <div class="chart-col"><div class="chart-count">1</div><div class="chart-track"><div class="chart-fill" style="height: 40%;"></div></div><div class="chart-label">二</div></div>
+                <div class="chart-col"><div class="chart-count"></div><div class="chart-track"><div class="chart-fill" style="height: 4%;"></div></div><div class="chart-label">三</div></div>
+                <div class="chart-col"><div class="chart-count">2</div><div class="chart-track"><div class="chart-fill" style="height: 80%;"></div></div><div class="chart-label">四</div></div>
+                <div class="chart-col"><div class="chart-count">1</div><div class="chart-track"><div class="chart-fill" style="height: 40%;"></div></div><div class="chart-label">五</div></div>
+                <div class="chart-col"><div class="chart-count">2</div><div class="chart-track"><div class="chart-fill" style="height: 80%;"></div></div><div class="chart-label">六</div></div>
+                <div class="chart-col"><div class="chart-count">1</div><div class="chart-track"><div class="chart-fill today" style="height: 40%;"></div></div><div class="chart-label today">日</div></div>
+              </div>
+            </div>
+
+            <div class="panel card">
+              <div class="panel-head"><span class="panel-title">彩虹分布</span><span class="panel-hint">按颜色看你的节奏</span></div>
+              <div class="color-row"><div class="color-dot" style="background: #FF6B6B;"></div><span class="color-name">草莓红</span><div class="color-bar"><div class="color-bar-fill" style="width: 100%; background: #FF6B6B;"></div></div><span class="color-count">4</span></div>
+              <div class="color-row"><div class="color-dot" style="background: #FFA94D;"></div><span class="color-name">蜜橘橙</span><div class="color-bar"><div class="color-bar-fill" style="width: 50%; background: #FFA94D;"></div></div><span class="color-count">2</span></div>
+              <div class="color-row"><div class="color-dot" style="background: #FFD43B;"></div><span class="color-name">柠檬黄</span><div class="color-bar"><div class="color-bar-fill" style="width: 25%; background: #FFD43B;"></div></div><span class="color-count">1</span></div>
+              <div class="color-row"><div class="color-dot" style="background: #51CF66;"></div><span class="color-name">青草绿</span><div class="color-bar"><div class="color-bar-fill" style="width: 50%; background: #51CF66;"></div></div><span class="color-count">2</span></div>
+              <div class="color-row"><div class="color-dot" style="background: #20C997;"></div><span class="color-name">薄荷青</span><div class="color-bar"><div class="color-bar-fill" style="width: 0%; background: #20C997;"></div></div><span class="color-count">0</span></div>
+              <div class="color-row"><div class="color-dot" style="background: #4DABF7;"></div><span class="color-name">晴空蓝</span><div class="color-bar"><div class="color-bar-fill" style="width: 75%; background: #4DABF7;"></div></div><span class="color-count">3</span></div>
+              <div class="color-row"><div class="color-dot" style="background: #9775FA;"></div><span class="color-name">葡萄紫</span><div class="color-bar"><div class="color-bar-fill" style="width: 25%; background: #9775FA;"></div></div><span class="color-count">1</span></div>
+              <div class="color-row"><div class="color-dot" style="background: #F783AC;"></div><span class="color-name">樱花粉</span><div class="color-bar"><div class="color-bar-fill" style="width: 0%; background: #F783AC;"></div></div><span class="color-count">0</span></div>
+            </div>
+
+            <div class="quote card">
+              <div class="quote-emoji">🌤</div>
+              <div class="quote-text">每一件小事，都是彩虹的一道颜色。</div>
+            </div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab"><img src="../images/tab-home.png" alt="" /><span>待办</span></div>
+          <div class="tab on"><img src="../images/tab-stats-on.png" alt="" /><span>统计</span></div>
+          <div class="tab"><img src="../images/tab-mine.png" alt="" /><span>我的</span></div>
+        </div>
+      </div>
+      <div class="caption">03 · 统计</div>
+    </div>
+  </div>
+</body>
+</html>

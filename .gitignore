@@ -1,0 +1,5 @@
+node_modules/
+.cc-safety-net/
+.DS_Store
+Thumbs.db
+*.log

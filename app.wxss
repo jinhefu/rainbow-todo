@@ -1,0 +1,87 @@
+page {
+  --rb-red: #ff6b6b;
+  --rb-orange: #ffa94d;
+  --rb-yellow: #ffd43b;
+  --rb-green: #51cf66;
+  --rb-teal: #20c997;
+  --rb-blue: #4dabf7;
+  --rb-purple: #9775fa;
+  --rb-pink: #f783ac;
+  --rb-ink: #24293a;
+  --rb-ink-soft: #6b7288;
+  --rb-ink-faint: #9aa0b4;
+  --rb-bg: #f6f7fb;
+  --rb-line: #eef0f7;
+  --rb-card: #ffffff;
+  --rb-shadow: 0 12rpx 36rpx rgba(38, 45, 82, 0.07);
+
+  background: var(--rb-bg);
+  color: var(--rb-ink);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+  font-size: 28rpx;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+view,
+text,
+input,
+textarea,
+picker,
+scroll-view,
+button {
+  box-sizing: border-box;
+}
+
+.page-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.rainbow-text {
+  background: linear-gradient(96deg, #ff6b6b 0%, #ffa94d 20%, #ffd43b 38%, #51cf66 56%, #4dabf7 78%, #9775fa 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.card {
+  background: var(--rb-card);
+  border-radius: 32rpx;
+  box-shadow: var(--rb-shadow);
+}
+
+.section-label {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: var(--rb-ink-faint);
+  letter-spacing: 2rpx;
+}
+
+.fade-up {
+  animation: fadeUp 0.42s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(40rpx) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

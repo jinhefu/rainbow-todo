@@ -1,0 +1,65 @@
+<view class="stats-page">
+  <view class="stats-head">
+    <view class="stats-title rainbow-text">彩虹统计</view>
+    <view class="stats-sub">{{todayLabel}} · 看见自己的每一点进步</view>
+  </view>
+
+  <view class="metric-grid">
+    <view class="metric card fade-up">
+      <view class="metric-num">{{stats.total}}</view>
+      <view class="metric-label">全部待办</view>
+    </view>
+    <view class="metric card fade-up" style="animation-delay: 60ms;">
+      <view class="metric-num">{{stats.done}}</view>
+      <view class="metric-label">已完成</view>
+    </view>
+    <view class="metric card fade-up" style="animation-delay: 120ms;">
+      <view class="metric-num">{{stats.weekDone}}</view>
+      <view class="metric-label">本周完成</view>
+    </view>
+    <view class="metric card fade-up" style="animation-delay: 180ms;">
+      <view class="metric-num">{{stats.streak}}<text class="metric-unit">天</text></view>
+      <view class="metric-label">连续打卡</view>
+    </view>
+  </view>
+
+  <view class="panel card fade-up">
+    <view class="panel-head">
+      <text class="panel-title">近 7 天完成情况</text>
+      <text class="panel-hint">今天已完成 {{stats.doneToday}} 件</text>
+    </view>
+    <view class="chart">
+      <view wx:for="{{stats.weekSeries}}" wx:key="date" class="chart-col">
+        <view class="chart-count">{{item.count > 0 ? item.count : ''}}</view>
+        <view class="chart-track">
+          <view class="chart-fill {{item.isToday ? 'chart-fill-today' : ''}}" style="height: {{item.percent}}%;"></view>
+        </view>
+        <view class="chart-label {{item.isToday ? 'chart-label-today' : ''}}">{{item.label}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="panel card fade-up">
+    <view class="panel-head">
+      <text class="panel-title">彩虹分布</text>
+      <text class="panel-hint">按颜色看你的节奏</text>
+    </view>
+    <view class="color-list">
+      <view wx:for="{{stats.colorStats}}" wx:key="name" class="color-row">
+        <view class="color-dot" style="background: {{item.color}};"></view>
+        <text class="color-name">{{item.name}}</text>
+        <view class="color-bar">
+          <view class="color-bar-fill" style="width: {{item.percent}}%; background: {{item.color}};"></view>
+        </view>
+        <text class="color-count">{{item.count}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="quote card fade-up">
+    <view class="quote-emoji">🌤</view>
+    <view class="quote-text">{{quote}}</view>
+  </view>
+
+  <view class="bottom-pad"></view>
+</view>

@@ -1,0 +1,74 @@
+<view class="editor-page">
+  <view class="editor-head">
+    <view class="editor-eyebrow">{{isEdit ? '编辑待办' : '新的待办'}}</view>
+    <view class="editor-title rainbow-text">{{isEdit ? '让细节更清晰' : '今天想完成什么？'}}</view>
+  </view>
+
+  <view class="field card">
+    <input class="title-input"
+           placeholder="写下要做的事…"
+           placeholder-class="ph"
+           value="{{form.title}}"
+           maxlength="40"
+           focus="{{!isEdit}}"
+           bindinput="onTitleInput" />
+    <view class="field-line"></view>
+    <textarea class="note-input"
+              placeholder="补充一点细节（可选）"
+              placeholder-class="ph"
+              value="{{form.note}}"
+              maxlength="200"
+              auto-height
+              bindinput="onNoteInput" />
+  </view>
+
+  <view class="block">
+    <view class="section-label">选一个彩虹色</view>
+    <view class="swatches">
+      <view wx:for="{{palette}}"
+            wx:key="value"
+            class="swatch {{form.color === item.value ? 'swatch-on' : ''}}"
+            style="background: {{item.value}};"
+            data-value="{{item.value}}"
+            bindtap="onColor">
+        <text wx:if="{{form.color === item.value}}" class="swatch-mark">✓</text>
+      </view>
+    </view>
+    <view class="swatch-name">{{activeColorName}}</view>
+  </view>
+
+  <view class="block">
+    <view class="section-label">优先级</view>
+    <view class="segment-row">
+      <view wx:for="{{priorities}}"
+            wx:key="value"
+            class="segment {{form.priority === item.value ? 'segment-on' : ''}}"
+            data-value="{{item.value}}"
+            bindtap="onPriority">{{item.label}}</view>
+    </view>
+  </view>
+
+  <view class="block">
+    <view class="section-label">截止日期</view>
+    <view class="quick-row">
+      <view wx:for="{{quickDates}}"
+            wx:key="label"
+            class="quick {{form.dueDate === item.value ? 'quick-on' : ''}}"
+            data-value="{{item.value}}"
+            bindtap="onQuickDate">{{item.label}}</view>
+      <picker mode="date" value="{{pickerValue}}" start="{{today}}" bindchange="onDateChange">
+        <view class="quick {{customDate ? 'quick-on' : ''}}">选择日期</view>
+      </picker>
+    </view>
+    <view wx:if="{{form.dueDate}}" class="due-preview">
+      <text>已设为 {{form.dueDate}}（{{dueLabel}}）</text>
+      <text class="due-clear" bindtap="onClearDate">清除日期</text>
+    </view>
+  </view>
+
+  <view class="editor-actions">
+    <view class="btn-save" hover-class="btn-hover" bindtap="onSave">{{isEdit ? '保存修改' : '加入彩虹清单'}}</view>
+    <view wx:if="{{isEdit}}" class="btn-delete" bindtap="onDelete">删除这条待办</view>
+  </view>
+  <view class="safe-pad"></view>
+</view>
